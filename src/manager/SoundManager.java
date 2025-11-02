@@ -68,9 +68,14 @@ public class SoundManager {
     }
 
     public void playFireball() {
-        Clip clip = getClip(loadAudio("aag"));
-        clip.start();
-
+        int randInt = (int)(Math.random() * 20);
+        if (randInt==0){
+            Clip clip = getClip(loadAudio("mkb"));
+            clip.start();
+        } else {
+            Clip clip = getClip(loadAudio("aag"));
+            clip.start();
+        }
     }
 
     public void playGameOver() {
