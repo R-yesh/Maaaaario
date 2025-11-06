@@ -2,7 +2,6 @@ package model.brick;
 
 import manager.GameEngine;
 import manager.MapManager;
-import model.Map;
 import model.prize.Prize;
 import view.Animation;
 import view.ImageLoader;

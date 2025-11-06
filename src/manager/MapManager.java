@@ -32,13 +32,13 @@ public class MapManager {
         Mario mario = getMario();
         mario.resetLocation();
         engine.resetCamera();
-        createMap(engine.getImageLoader(), map.getPath());
+        createMap(engine.getImageLoader());
         map.setMario(mario);
     }
 
-    public boolean createMap(ImageLoader loader, String path) {
+    public boolean createMap(ImageLoader loader) {
         MapCreator mapCreator = new MapCreator(loader);
-        map = mapCreator.createMap("/maps/" + path, 400);
+        map = mapCreator.createMap();
 
         return map != null;
     }

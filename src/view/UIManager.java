@@ -6,7 +6,6 @@ import manager.GameStatus;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,7 +17,6 @@ public class UIManager extends JPanel{
     private BufferedImage heartIcon;
     private BufferedImage coinIcon;
     private BufferedImage selectIcon;
-    private MapSelection mapSelection;
 
     public UIManager(GameEngine engine, int width, int height) {
         setPreferredSize(new Dimension(width, height));
@@ -28,15 +26,12 @@ public class UIManager extends JPanel{
         this.engine = engine;
         ImageLoader loader = engine.getImageLoader();
 
-        mapSelection = new MapSelection();
-
         BufferedImage sprite = loader.loadImage("/sprite.png");
         this.heartIcon = loader.loadImage("/heart-icon.png");
         this.coinIcon = loader.getSubImage(sprite, 1, 5, 48, 48);
         this.selectIcon = loader.loadImage("/select-icon.png");
         this.startScreenImage = loader.loadImage("/start-screen.png");
         this.helpScreenImage = loader.loadImage("/help-screen.png");
-        this.aboutScreenImage = loader.loadImage("/about-screen.png");
         this.gameOverScreen = loader.loadImage("/game-over.png");
 
         try {
@@ -58,12 +53,6 @@ public class UIManager extends JPanel{
         if(gameStatus == GameStatus.START_SCREEN){
             drawStartScreen(g2);
         }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
-            drawMapSelectionScreen(g2);
-        }
-        /* else if(gameStatus == GameStatus.ABOUT_SCREEN){
-            drawAboutScreen(g2);
-        }*/
         else if(gameStatus == GameStatus.HELP_SCREEN){
             drawHelpScreen(g2);
         }
@@ -151,35 +140,12 @@ public class UIManager extends JPanel{
         g2.setFont(gameFont.deriveFont(25f));
         g2.setColor(Color.WHITE);
         String displayedStr = "Points: " + engine.getScore();
-        int stringLength = g2.getFontMetrics().stringWidth(displayedStr);;
-        //g2.drawImage(coinIcon, 50, 10, null);
         g2.drawString(displayedStr, 300, 50);
     }
 
     private void drawStartScreen(Graphics2D g2){
         int row = engine.getStartScreenSelection().getLineNumber();
         g2.drawImage(startScreenImage, 0, 0, null);
-        g2.drawImage(selectIcon, 375, row * 70 + 440, null);
-    }
-
-    private void drawMapSelectionScreen(Graphics2D g2){
-        g2.setFont(gameFont.deriveFont(50f));
-        g2.setColor(Color.WHITE);
-        mapSelection.draw(g2);
-        int row = engine.getSelectedMap();
-        int y_location = row*100+300-selectIcon.getHeight();
-        g2.drawImage(selectIcon, 375, y_location, null);
-    }
-
-    public String selectMapViaMouse(Point mouseLocation) {
-        return mapSelection.selectMap(mouseLocation);
-    }
-
-    public String selectMapViaKeyboard(int index){
-        return mapSelection.selectMap(index);
-    }
-
-    public int changeSelectedMap(int index, boolean up){
-        return mapSelection.changeSelectedMap(index, up);
+        g2.drawImage(selectIcon, 350, row * 60 + 530, null);
     }
 }

@@ -45,16 +45,16 @@ class MapCreator {
 
     }
 
-    Map createMap(String mapPath, double timeLimit) {
-        BufferedImage mapImage = imageLoader.loadImage(mapPath);
+    Map createMap() {
+        BufferedImage mapImage = imageLoader.loadImage("/maps/Map.png");
 
         if (mapImage == null) {
             System.out.println("Given path is invalid...");
             return null;
         }
 
-        Map createdMap = new Map(timeLimit, backgroundImage);
-        String[] paths = mapPath.split("/");
+        Map createdMap = new Map(400, backgroundImage);
+        String[] paths = "/maps/Map.png".split("/");
         createdMap.setPath(paths[paths.length-1]);
 
         int pixelMultiplier = 48;
@@ -93,13 +93,13 @@ class MapCreator {
                     createdMap.addGroundBrick(brick);
                 }
                 else if (currentPixel == goomba) {
-                    Enemy enemy = new Goomba(xLocation, yLocation, this.goombaLeft);
-                    ((Goomba)enemy).setRightImage(goombaRight);
+                    Goomba enemy = new Goomba(xLocation, yLocation, this.goombaLeft);
+                    enemy.setRightImage(goombaRight);
                     createdMap.addEnemy(enemy);
                 }
                 else if (currentPixel == koopa) {
-                    Enemy enemy = new KoopaTroopa(xLocation, yLocation, this.koopaLeft);
-                    ((KoopaTroopa)enemy).setRightImage(koopaRight);
+                    KoopaTroopa enemy = new KoopaTroopa(xLocation, yLocation, this.koopaLeft);
+                    enemy.setRightImage(koopaRight);
                     createdMap.addEnemy(enemy);
                 }
                 else if (currentPixel == mario) {

@@ -21,7 +21,6 @@ public class GameEngine implements Runnable {
     private ImageLoader imageLoader;
     private Thread thread;
     private StartScreenSelection startScreenSelection = StartScreenSelection.START_GAME;
-    private int selectedMap = 0;
 
     private GameEngine() {
         init();
@@ -39,7 +38,6 @@ public class GameEngine implements Runnable {
         JFrame frame = new JFrame("Super Mario Bros.");
         frame.add(uiManager);
         frame.addKeyListener(inputManager);
-        frame.addMouseListener(inputManager);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -68,26 +66,8 @@ public class GameEngine implements Runnable {
         soundManager.restartBackground();
     }
 
-    public void selectMapViaMouse() {
-        String path = uiManager.selectMapViaMouse(uiManager.getMousePosition());
-        if (path != null) {
-            createMap(path);
-        }
-    }
-
-    public void selectMapViaKeyboard(){
-        String path = uiManager.selectMapViaKeyboard(selectedMap);
-        if (path != null) {
-            createMap(path);
-        }
-    }
-
-    public void changeSelectedMap(boolean up){
-        selectedMap = uiManager.changeSelectedMap(selectedMap, up);
-    }
-
-    private void createMap(String path) {
-        boolean loaded = mapManager.createMap(imageLoader, path);
+    private void createMap() {
+        boolean loaded = mapManager.createMap(imageLoader);
         if(loaded){
             setGameStatus(GameStatus.RUNNING);
             soundManager.restartBackground();
@@ -183,17 +163,7 @@ public class GameEngine implements Runnable {
                 selectOption(false);
             }
         }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
-            if(input == ButtonAction.SELECT){
-                selectMapViaKeyboard();
-            }
-            else if(input == ButtonAction.GO_UP){
-                changeSelectedMap(true);
-            }
-            else if(input == ButtonAction.GO_DOWN){
-                changeSelectedMap(false);
-            }
-        } else if (gameStatus == GameStatus.RUNNING) {
+        else if (gameStatus == GameStatus.RUNNING) {
             Mario mario = mapManager.getMario();
             if (input == ButtonAction.JUMP) {
                 mario.jump(this);
@@ -230,9 +200,7 @@ public class GameEngine implements Runnable {
     }
 
     private void startGame() {
-        if (gameStatus != GameStatus.GAME_OVER) {
-            setGameStatus(GameStatus.MAP_SELECTION);
-        }
+        createMap();
     }
 
     private void pauseGame() {
@@ -283,10 +251,6 @@ public class GameEngine implements Runnable {
         return mapManager.getCoins();
     }
 
-    public int getSelectedMap() {
-        return selectedMap;
-    }
-
     public void drawMap(Graphics2D g2) {
         mapManager.drawMap(g2);
     }
@@ -335,7 +299,7 @@ public class GameEngine implements Runnable {
         return mapManager;
     }
 
-    public static void main(String... args) {
+    public static void main(String[] args) {
         new GameEngine();
     }
 
