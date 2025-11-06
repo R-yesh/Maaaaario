@@ -100,8 +100,6 @@ public class UIManager extends JPanel{
         g2.drawImage(helpScreenImage, 0, 0, null);
     }
 
-    /* private void drawAboutScreen(Graphics2D g2) { g2.drawImage(aboutScreenImage, 0, 0, null);} */
-
     private void drawGameOverScreen(Graphics2D g2) {
         g2.drawImage(gameOverScreen, 0, 0, null);
         g2.setFont(gameFont.deriveFont(50f));

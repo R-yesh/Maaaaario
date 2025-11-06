@@ -38,15 +38,6 @@ public abstract class GameObject {
         if(style != null){
             g.drawImage(style, (int)x, (int)y, null);
         }
-
-        //for debugging
-        /*Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.WHITE);
-
-        g2.draw(getTopBounds());
-        g2.draw(getBottomBounds());
-        g2.draw(getRightBounds());
-        g2.draw(getLeftBounds());*/
     }
 
     public void updateLocation() {
@@ -92,10 +83,6 @@ public abstract class GameObject {
         return dimension;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
-    }
-
     public void setDimension(int width, int height){ this.dimension =  new Dimension(width, height); }
 
     public BufferedImage getStyle() {
@@ -120,10 +107,6 @@ public abstract class GameObject {
 
     public void setVelY(double velY) {
         this.velY = velY;
-    }
-
-    public double getGravityAcc() {
-        return gravityAcc;
     }
 
     public void setGravityAcc(double gravityAcc) {

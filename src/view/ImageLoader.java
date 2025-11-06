@@ -27,18 +27,6 @@ public class ImageLoader {
         return imageToReturn;
     }
 
-    public BufferedImage loadImage(File file){
-        BufferedImage imageToReturn = null;
-
-        try {
-            imageToReturn = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return imageToReturn;
-    }
-
     public BufferedImage getSubImage(BufferedImage image, int col, int row, int w, int h){
         if((col == 1 || col == 4) && row == 3){ //koopa
             return image.getSubimage((col-1)*48, 128, w, h);
